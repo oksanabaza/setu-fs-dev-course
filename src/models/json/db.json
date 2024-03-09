@@ -13,6 +13,20 @@
       "email": "admin@gmail.com",
       "password": "admin",
       "_id": "deaaa6d0-1b55-4421-a021-5556dd424fe0"
+    },
+    {
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "email": "maggie@simpson.com",
+      "password": "secret",
+      "_id": "fa7490e2-b4a7-4fd3-bd0e-7b19b2d0052e"
+    },
+    {
+      "firstName": "Maggie",
+      "lastName": "Simpson",
+      "email": "maggie@simpson.com",
+      "password": "secret",
+      "_id": "beb8219e-f097-4f4d-9ae9-c899e6f651fa"
     }
   ],
   "playlists": [

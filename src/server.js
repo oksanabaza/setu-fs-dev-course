@@ -6,19 +6,31 @@ import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import Cookie from "@hapi/cookie";
+import dotenv from "dotenv";
 import { accountsController } from "./controllers/accounts-controller.js";
-
+import Joi from "joi";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const result = dotenv.config();
+
+
+
+if (result.error) {
+  console.log(result.error.message);
+  process.exit(1);
+}
 
 async function init() {
   const server = Hapi.server({
     port: 3000,
     host: "localhost",
   });
+  // await server.register(Cookie);
+  await server.register(Vision);
   await server.register(Cookie);
-
+  server.validator(Joi);
   server.auth.strategy("session", "cookie", {
     cookie: {
       name: "playtime",

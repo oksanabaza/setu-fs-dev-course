@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "firstName": "admin",
+      "lastName": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "_id": "7cd7297d-cf41-4704-ae93-4e07afed077f"
+    },
+    {
+      "firstName": "admin",
+      "lastName": "admin",
+      "email": "admin@gmail.com",
+      "password": "admin",
+      "_id": "deaaa6d0-1b55-4421-a021-5556dd424fe0"
+    }
+  ],
+  "playlists": [
+    {
+      "userid": "7cd7297d-cf41-4704-ae93-4e07afed077f",
+      "title": "fefesf",
+      "_id": "e9f01c24-193e-4c4c-a9a7-9268a1861cfb"
+    },
+    {
+      "userid": "7cd7297d-cf41-4704-ae93-4e07afed077f",
+      "title": "edaesf",
+      "_id": "1cb608f5-bf0d-480a-a4ae-be0281699efd"
+    }
+  ],
+  "tracks": [
+    {
+      "title": "rfae",
+      "artist": "ef",
+      "duration": null,
+      "_id": "a79c6b64-a954-41ee-83cf-3f9e6a0ed0a0",
+      "playlistid": "e9f01c24-193e-4c4c-a9a7-9268a1861cfb"
+    }
+  ]
+}

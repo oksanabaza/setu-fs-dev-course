@@ -1,8 +1,8 @@
 import { EventEmitter } from "events";
 import { assert } from "chai";
-import { db } from "../src/models/db.js";
-import { testPlaylists, mozart } from "./fixtures.js";
-import { assertSubset } from "./test-utils.js";
+import { db } from "../../src/models/db.js";
+import { testPlaylists, mozart } from "../fixtures.js";
+import { assertSubset } from "../test-utils.js";
 
 EventEmitter.setMaxListeners(25);
 
@@ -36,7 +36,7 @@ suite("Playlist Model tests", () => {
     assertSubset(mozart, playlist);
   });
 
-  test("delete One Playlist - success", async () => {
+  test("delete One Playist - success", async () => {
     const id = testPlaylists[0]._id;
     await db.playlistStore.deletePlaylistById(id);
     const returnedPlaylists = await db.playlistStore.getAllPlaylists();

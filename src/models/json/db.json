@@ -1,48 +1,55 @@
 {
   "users": [
     {
-      "firstName": "Homer",
+      "_id": "66d8e95f-0edc-4a96-a0ae-6772b526b6fb",
+      "firstName": "Bart",
       "lastName": "Simpson",
-      "email": "homer@simpson.com",
+      "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "56552526-0d7f-4eac-8022-04c0f0a5c453"
+      "__v": 0
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "ffd6e925-d677-422d-82c7-607a67faa73b"
+      "_id": "7406d6de-2ca3-414a-b902-9d3ac7662901"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "a02aed03-62a4-4b26-b9a6-6b757f0682a1"
+      "_id": "269c759d-f01b-4308-a3c9-4e6a59a12011"
     }
   ],
   "playlists": [
     {
-      "title": "Beethoven Sonatas",
-      "_id": "081215d7-e900-41c1-a08f-ec834511d862"
-    },
-    {
-      "title": "Beethoven Concertos",
-      "_id": "46265fbc-17a0-4e12-b1c3-93cc17bd1765"
-    },
-    {
-      "title": "Beethoven Symphonies",
-      "_id": "635959ef-e912-440c-8da6-074659ed1ea3"
+      "title": "Mozart Favourites",
+      "_id": "e099aeb5-b34d-40fd-91ad-b0d540bbd4c5"
     }
   ],
   "tracks": [
     {
-      "title": "rfae",
-      "artist": "ef",
-      "duration": null,
-      "_id": "a79c6b64-a954-41ee-83cf-3f9e6a0ed0a0",
-      "playlistid": "e9f01c24-193e-4c4c-a9a7-9268a1861cfb"
+      "title": "Piano Sonata No. 3",
+      "artist": "Beethoven",
+      "duration": 5,
+      "_id": "849d85f4-fb8e-4403-aca4-22968d77a0a8",
+      "playlistid": "e099aeb5-b34d-40fd-91ad-b0d540bbd4c5"
+    },
+    {
+      "title": "Piano Sonata No. 7",
+      "artist": "Beethoven",
+      "duration": 6,
+      "_id": "62fe61c7-d838-4de9-a7f8-965fdf6db7e7",
+      "playlistid": "e099aeb5-b34d-40fd-91ad-b0d540bbd4c5"
+    },
+    {
+      "title": "Piano Sonata No. 10",
+      "artist": "Beethoven",
+      "duration": 4,
+      "_id": "20c4f27a-4e22-4b4f-8ebd-0b9da3cd7d0b",
+      "playlistid": "e099aeb5-b34d-40fd-91ad-b0d540bbd4c5"
     }
   ]
 }

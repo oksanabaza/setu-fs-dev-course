@@ -1,4 +1,3 @@
-// import { userApi } from "/Users/oksana/edu/full-stack-dev-1/setu-fs-dev-course/src/api/users-api.js";
 import { userApi } from "./api/users-api.js";
 
 export const apiRoutes = [

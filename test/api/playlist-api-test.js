@@ -1,61 +1,66 @@
-import { EventEmitter } from "events";
 import { assert } from "chai";
-import { playtimeService } from "./playtime-service.js";
 import { assertSubset } from "../test-utils.js";
+import { playtimeService } from "./playtime-service.js";
+import { maggie, mozart, testPlaylists, testTracks, concerto } from "../fixtures.js";
 
-import { maggie, mozart, testPlaylists } from "../fixtures.js";
-
-EventEmitter.setMaxListeners(25);
-
-suite("Playlist API tests", () => {
+suite("Track API tests", () => {
   let user = null;
+  let beethovenSonatas = null;
 
   setup(async () => {
     await playtimeService.deleteAllPlaylists();
     await playtimeService.deleteAllUsers();
+    await playtimeService.deleteAllTracks();
     user = await playtimeService.createUser(maggie);
     mozart.userid = user._id;
+    beethovenSonatas = await playtimeService.createPlaylist(mozart);
   });
 
   teardown(async () => {});
 
-  test("create playlist", async () => {
-    const returnedPlaylist = await playtimeService.createPlaylist(mozart);
-    assert.isNotNull(returnedPlaylist);
-    assertSubset(mozart, returnedPlaylist);
+  test("create track", async () => {
+    const returnedTrack = await playtimeService.createTrack(beethovenSonatas._id, concerto);
+    assertSubset(concerto, returnedTrack);
   });
 
-  test("delete a playlist", async () => {
-    const playlist = await playtimeService.createPlaylist(mozart);
-    const response = await playtimeService.deletePlaylist(playlist._id);
-    assert.equal(response.status, 204);
-    try {
-      const returnedPlaylist = await playtimeService.getPlaylist(playlist.id);
-      assert.fail("Should not return a response");
-    } catch (error) {
-      assert(error.response.data.message === "No Playlist with this id", "Incorrect Response Message");
-    }
-  });
-
-  test("create multiple playlists", async () => {
-    for (let i = 0; i < testPlaylists.length; i += 1) {
-      testPlaylists[i].userid = user._id;
+  test("create Multiple tracks", async () => {
+    for (let i = 0; i < testTracks.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      await playtimeService.createPlaylist(testPlaylists[i]);
+      await playtimeService.createTrack(beethovenSonatas._id, testTracks[i]);
     }
-    let returnedLists = await playtimeService.getAllPlaylists();
-    assert.equal(returnedLists.length, testPlaylists.length);
-    await playtimeService.deleteAllPlaylists();
-    returnedLists = await playtimeService.getAllPlaylists();
-    assert.equal(returnedLists.length, 0);
+    const returnedTracks = await playtimeService.getAllTracks();
+    assert.equal(returnedTracks.length, testTracks.length);
+    for (let i = 0; i < returnedTracks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const track = await playtimeService.getTrack(returnedTracks[i]._id);
+      assertSubset(track, returnedTracks[i]);
+    }
   });
 
-  test("remove non-existant playlist", async () => {
-    try {
-      const response = await playtimeService.deletePlaylist("not an id");
-      assert.fail("Should not return a response");
-    } catch (error) {
-      assert(error.response.data.message === "No Playlist with this id", "Incorrect Response Message");
+  test("Delete TrackApi", async () => {
+    for (let i = 0; i < testTracks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await playtimeService.createTrack(beethovenSonatas._id, testTracks[i]);
+    }
+    let returnedTracks = await playtimeService.getAllTracks();
+    assert.equal(returnedTracks.length, testTracks.length);
+    for (let i = 0; i < returnedTracks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const track = await playtimeService.deleteTrack(returnedTracks[i]._id);
+    }
+    returnedTracks = await playtimeService.getAllTracks();
+    assert.equal(returnedTracks.length, 0);
+  });
+
+  test("denormalised playlist", async () => {
+    for (let i = 0; i < testTracks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await playtimeService.createTrack(beethovenSonatas._id, testTracks[i]);
+    }
+    const returnedPlaylist = await playtimeService.getPlaylist(beethovenSonatas._id);
+    assert.equal(returnedPlaylist.tracks.length, testTracks.length);
+    for (let i = 0; i < testTracks.length; i += 1) {
+      assertSubset(testTracks[i], returnedPlaylist.tracks[i]);
     }
   });
 });

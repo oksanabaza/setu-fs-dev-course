@@ -7,8 +7,10 @@
   "scripts": {
     "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
-    "dev": "./node_modules/.bin/nodemon  src/server.js",
-    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit"
+    "dev": "./node_modules/.bin/nodemon src/server.js --ignore 'src/models/json/*.json'",
+    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit",
+    "testmodels": "./node_modules/mocha/bin/mocha --ui tdd test/models/**/*.js",
+    "testapi": "./node_modules/mocha/bin/mocha --ui tdd test/api/**/*.js"
   },
   "author": "",
   "license": "ISC",
@@ -27,9 +29,11 @@
     "@hapi/boom": "^10.0.1",
     "@hapi/cookie": "^12.0.1",
     "@hapi/hapi": "^21.3.3",
+    "@hapi/inert": "^7.1.0",
     "@hapi/vision": "^7.0.3",
     "dotenv": "^16.4.5",
     "handlebars": "^4.7.8",
+    "hapi-swagger": "^17.2.1",
     "joi": "^17.12.2",
     "lowdb": "^7.0.1",
     "mongoose": "^8.2.1",

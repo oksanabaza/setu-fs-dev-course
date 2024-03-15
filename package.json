@@ -38,6 +38,7 @@
     "joi": "^17.12.2",
     "jsonwebtoken": "^9.0.2",
     "lowdb": "^7.0.1",
+    "mais-mongoose-seeder": "^1.0.7",
     "mongoose": "^8.2.1",
     "uuid": "^9.0.1"
   }

@@ -21,12 +21,33 @@ export const UserSpecPlus = UserSpec.keys({
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
-export const TrackSpec = {
-  title: Joi.string().required(),
-  artist: Joi.string().required(),
-  duration: Joi.number().allow("").optional(),
-};
+export const TrackSpec = Joi.object()
+  .keys({
+    title: Joi.string().required().example("Piano Sonata No. 7"),
+    artist: Joi.string().required().example("Beethoven"),
+    duration: Joi.number().allow("").optional().example(12),
+    playlistid: IdSpec,
+  })
+  .label("Track");
 
-export const PlaylistSpec = {
-  title: Joi.string().required(),
-};
+export const TrackSpecPlus = TrackSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("TrackPlus");
+
+export const TrackArraySpec = Joi.array().items(TrackSpecPlus).label("TrackArray");
+
+export const PlaylistSpec = Joi.object()
+  .keys({
+    title: Joi.string().required().example("Beethoven Sonatas"),
+    userid: IdSpec,
+    tracks: TrackArraySpec,
+  })
+  .label("Playlist");
+
+export const PlaylistSpecPlus = PlaylistSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("PlaylistPlus");
+
+export const PlaylistArraySpec = Joi.array().items(PlaylistSpecPlus).label("PlaylistArray");

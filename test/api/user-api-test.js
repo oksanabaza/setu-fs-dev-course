@@ -8,11 +8,16 @@ const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
   setup(async () => {
+    playtimeService.clearAuth();
+    await playtimeService.createUser(maggie);
+    await playtimeService.authenticate(maggie);
     await playtimeService.deleteAllUsers();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       users[0] = await playtimeService.createUser(testUsers[i]);
     }
+    await playtimeService.createUser(maggie);
+    await playtimeService.authenticate(maggie);
   });
   teardown(async () => {});
 
@@ -22,12 +27,14 @@ suite("User API tests", () => {
     assert.isDefined(newUser._id);
   });
 
-  test("delete all userApi", async () => {
+  test("delete all user", async () => {
     let returnedUsers = await playtimeService.getAllUsers();
-    assert.equal(returnedUsers.length, 3);
+    assert.equal(returnedUsers.length, 4);
     await playtimeService.deleteAllUsers();
+    await playtimeService.createUser(maggie);
+    await playtimeService.authenticate(maggie);
     returnedUsers = await playtimeService.getAllUsers();
-    assert.equal(returnedUsers.length, 0);
+    assert.equal(returnedUsers.length, 1);
   });
 
   test("get a user", async () => {
@@ -41,12 +48,14 @@ suite("User API tests", () => {
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No User with this id");
-      // assert.equal(error.response.data.statusCode, 503);
+      assert.equal(error.response.data.statusCode, 503);
     }
   });
 
   test("get a user - deleted user", async () => {
     await playtimeService.deleteAllUsers();
+    await playtimeService.createUser(maggie);
+    await playtimeService.authenticate(maggie);
     try {
       const returnedUser = await playtimeService.getUser(users[0]._id);
       assert.fail("Should not return a response");

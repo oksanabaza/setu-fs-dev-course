@@ -1,32 +1,41 @@
 import { v4 } from "uuid";
+import { db } from "./store-utils.js";
 
-let tracks = [];
-
-export const trackMemStore = {
+export const trackJsonStore = {
   async getAllTracks() {
-    return tracks;
+    await db.read();
+    return db.data.tracks;
   },
 
   async addTrack(playlistId, track) {
+    await db.read();
     track._id = v4();
     track.playlistid = playlistId;
-    tracks.push(track);
+    db.data.tracks.push(track);
+    await db.write();
     return track;
   },
 
   async getTracksByPlaylistId(id) {
-    return tracks.filter((track) => track.playlistid === id);
+    await db.read();
+    let foundTracks = db.data.tracks.filter((track) => track.playlistid === id);
+    if (!foundTracks) {
+      foundTracks = null;
+    }
+    return foundTracks;
   },
 
   async getTrackById(id) {
-    let foundTrack = tracks.find((track) => track._id === id);
+    await db.read();
+    let foundTrack = db.data.tracks.find((track) => track._id === id);
     if (!foundTrack) {
       foundTrack = null;
     }
     return foundTrack;
   },
- 
+
   async getPlaylistTracks(playlistId) {
+    await db.read();
     let foundTracks = tracks.filter((track) => track.playlistid === playlistId);
     if (!foundTracks) {
       foundTracks = null;
@@ -35,17 +44,21 @@ export const trackMemStore = {
   },
 
   async deleteTrack(id) {
-    const index = tracks.findIndex((track) => track._id === id);
-    if (index !== -1) tracks.splice(index, 1);
+    await db.read();
+    const index = db.data.tracks.findIndex((track) => track._id === id);
+    if (index !== -1) db.data.tracks.splice(index, 1);
+    await db.write();
   },
 
   async deleteAllTracks() {
-    tracks = [];
+    db.data.tracks = [];
+    await db.write();
   },
 
   async updateTrack(track, updatedTrack) {
     track.title = updatedTrack.title;
     track.artist = updatedTrack.artist;
     track.duration = updatedTrack.duration;
+    await db.write();
   },
 };

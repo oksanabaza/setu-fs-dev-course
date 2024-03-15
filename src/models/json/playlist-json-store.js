@@ -1,20 +1,18 @@
 import { v4 } from "uuid";
-import { trackMemStore } from "./track-mem-store.js";
+import { db } from "./store-utils.js";
+import { trackJsonStore } from "./track-json-store.js";
 
-let playlists = [];
-
-export const playlistMemStore = {
+export const playlistJsonStore = {
   async getAllPlaylists() {
-    return playlists;
-  },
-
-  async getUserPlaylists(userid) {
-    return playlists.filter((playlist) => playlist.userid === userid);
+    await db.read();
+    return db.data.playlists;
   },
 
   async addPlaylist(playlist) {
+    await db.read();
     playlist._id = v4();
-    playlists.push(playlist);
+    db.data.playlists.push(playlist);
+    await db.write();
     return playlist;
   },
 
@@ -29,6 +27,11 @@ export const playlistMemStore = {
     return list;
   },
 
+  async getUserPlaylists(userid) {
+    await db.read();
+    return db.data.playlists.filter((playlist) => playlist.userid === userid);
+  },
+
   async deletePlaylistById(id) {
     await db.read();
     const index = db.data.playlists.findIndex((playlist) => playlist._id === id);
@@ -36,8 +39,8 @@ export const playlistMemStore = {
     await db.write();
   },
 
-
   async deleteAllPlaylists() {
-    playlists = [];
+    db.data.playlists = [];
+    await db.write();
   },
 };

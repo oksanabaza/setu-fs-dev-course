@@ -29,6 +29,13 @@ export const playlistMongoStore = {
     return playlist;
   },
 
+  async updatePlaylist(updatedPlaylist) {
+    const playlist = await Playlist.findOne({ _id: updatedPlaylist._id });
+    playlist.title = updatedPlaylist.title;
+    playlist.img = updatedPlaylist.img;
+    await playlist.save();
+  },
+
   async deletePlaylistById(id) {
     try {
       await Playlist.deleteOne({ _id: id });
